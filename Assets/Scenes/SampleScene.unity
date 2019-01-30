@@ -320,7 +320,7 @@ MonoBehaviour:
   car3: {fileID: 1156133033}
   distances: []
   distancesText: {fileID: 1738385194}
-  sendData: {fileID: 0}
+  sendData: {fileID: 129232576}
 --- !u!114 &129232576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,7 +332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1dd5dd3336fb64987b9d5c8286266e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sd: {fileID: 0}
+  sd: {fileID: 129232575}
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0

@@ -50,6 +50,7 @@ public class SendDataToArduino : MonoBehaviour {
 
 	public void sendDistances(){
 
+		Debug.Log("I am sending data to Arduino now");
 		sp.Write("car0" + sd.distances[0].ToString());
 		sp.Write("car1" + sd.distances[1].ToString());
 		sp.Write("car2" + sd.distances[2].ToString());
