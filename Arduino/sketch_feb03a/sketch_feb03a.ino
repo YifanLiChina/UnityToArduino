@@ -60,7 +60,7 @@ void loop() {
       analogWrite(iMotorPin, iMotorFre);
       received = 0;
 //      delay(3000);
-      delay(1000);
+
     }
   }
 }

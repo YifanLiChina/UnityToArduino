@@ -2,19 +2,19 @@
 using System.IO.Ports;
 using System;
 
-public class ArduinoManager : MonoBehaviour {
+public class MyArduinoManager : MonoBehaviour {
 
-	public static string myPort = "COM9";
-	public static int baudrate = 9600;
-	public static SerialPort stream = new SerialPort(myPort, baudrate);
+	// public static string myPort = "COM10";
+	// for windows
+	// public static string myPort = "\\\\.\\COM10";
+	// public static int baudrate = 9600;
+	// public static SerialPort stream = new SerialPort(myPort, baudrate);
+	public static SerialPort stream = new SerialPort("\\\\.\\COM10",9600);
 	public string vibratorSpeed = "200";
 	public string messageFromArduino;
 
-	private int m1PWM;
-
 	// Use this for initialization
 	void Start () {
-		m1PWM = 0;
 		Open();
 	}
 	

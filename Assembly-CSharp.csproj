@@ -53,11 +53,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\ArduinoManager.cs" />
      <Compile Include="Assets\Scripts\FollowTheCar.cs" />
+     <Compile Include="Assets\Scripts\MyArduinoManager.cs" />
      <Compile Include="Assets\Scripts\SendDataToArduino.cs" />
      <Compile Include="Assets\Scripts\SpeedCaculator.cs" />
      <Compile Include="Assets\Scripts\speedManager.cs" />
+     <Compile Include="Assets\Scripts\SynManager.cs" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
