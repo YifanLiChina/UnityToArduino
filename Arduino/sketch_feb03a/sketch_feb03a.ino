@@ -3,11 +3,12 @@ int motorSpeed = 0;
 //String message;
 char buffer[13];
 int received = 0;
+int count = 0;
 
 void setup() {
 
   pinMode(6, OUTPUT);
-  pinMode(5, OUTPUT);
+//  pinMode(5, OUTPUT);
   Serial.begin(9600);
   while(!Serial);
 //  Serial.println("Speed 0 to 255");
@@ -24,7 +25,7 @@ void loop() {
 //      analogWrite(motorPin, speed);
 //    }
 //  }
-
+  Serial.println("count");
 //third step: receive data from Unity, println() works, print() will crash Unity
   Serial.flush();
   if (Serial.available() > 0){
@@ -33,7 +34,7 @@ void loop() {
     buffer[received++] = Serial.read();
     buffer[received] = '\0';
     if (received >= (sizeof(buffer) - 1)){
-      Serial.println(buffer);
+//      Serial.println(buffer);
       char* motorPin;
       char* motorFre;
       char* buf;
@@ -46,21 +47,25 @@ void loop() {
 //      motorPow = strtok(NULL, ',');
       int iMotorPin = atoi(motorPin);
       int iMotorFre = atoi(motorFre);
-      Serial.println(iMotorPin);
-      Serial.println(iMotorFre);
-      analogWrite(iMotorPin, iMotorFre);
+//      Serial.println(iMotorPin);
+//      Serial.println(iMotorFre);
+      if (count > 10){
+        analogWrite(iMotorPin, iMotorFre);
+        count = 0;
+      }else{
+        digitalWrite(iMotorPin, LOW);
+      }
       buf =strtok_r(NULL, ",", &ptr);
       motorPin = buf;
       buf = strtok_r(NULL, ",", &ptr);
       motorFre = buf;
       iMotorPin = atoi(motorPin);
       iMotorFre = atoi(motorFre);
-      Serial.println(iMotorPin);
-      Serial.println(iMotorFre);
+//      Serial.println(iMotorPin);
+//      Serial.println(iMotorFre);
       analogWrite(iMotorPin, iMotorFre);
       received = 0;
-//      delay(3000);
-
+      count = count+1;
     }
   }
 }

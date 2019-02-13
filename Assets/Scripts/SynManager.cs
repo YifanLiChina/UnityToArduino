@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Collections;
 using System.IO.Ports;
+using System;
 
 public class SynManager : MonoBehaviour {
 
@@ -10,6 +11,7 @@ public class SynManager : MonoBehaviour {
 	private Queue outputQueue; //From Unity to Arduino
 	private Queue inputQueue; // From Arduino to Unity
 	public static SerialPort stream;
+	public bool looping = true;
 
 	void Start () {
 		StartThread();
@@ -23,14 +25,26 @@ public class SynManager : MonoBehaviour {
 		thread.Start();
 	}
 
+	public void StopThread(){
+		lock(this){
+			looping = false;
+		}
+	}
+
+	public bool IsLooping(){
+		lock(this){
+			return looping;
+		}
+	}
+
 	public void ThreadLoop(){
 		// open the connection
-		stream = new SerialPort("\\\\.\\COM10",9600);
+		stream = new SerialPort("\\\\.\\COM9",9600);
 		stream.ReadTimeout = 50;
 		stream.Open();
 
 		// loop
-		while(true){
+		while(IsLooping()){
 			// send data to Arduino
 			if (outputQueue.Count != 0){
 				string command = outputQueue.Dequeue().ToString();
@@ -38,11 +52,16 @@ public class SynManager : MonoBehaviour {
 			}
 
 			// read data from Arduino
-			string result = ReadFromArduinoWithQueues();
-			if (result != null){
-				inputQueue.Enqueue(result);
+			messageFromArduino = ReadFromArduino();
+			Debug.Log(messageFromArduino);
+			if (messageFromArduino != null){
+				inputQueue.Enqueue(messageFromArduino);
 			}
 		}
+	}
+
+	public void OnApplicationQuit(){
+		stream.Close();
 	}
 
 	public void WriteToArduinoWithQueues(string command){
@@ -61,5 +80,14 @@ public class SynManager : MonoBehaviour {
 		stream.Write(message);
 		Debug.Log("I is writing " + message + " to Arduino now");
 		stream.BaseStream.Flush();
+	}
+
+	public string ReadFromArduino(){
+		stream.ReadTimeout = 25;
+		try{
+			return stream.ReadLine();
+		}catch(TimeoutException){
+			return "nothing";
+		}
 	}
 }
